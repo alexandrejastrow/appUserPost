@@ -1,6 +1,7 @@
 module.exports = {
     "type": "postgres",
     "url": process.env.DATABASE_URL,
+
     "entities": [
         "src/app/models/*.ts",
 
@@ -14,7 +15,6 @@ module.exports = {
 }
 
 /*
-
     "ssl": true,
     "synchronize": true,
     "extra": {
