@@ -4,23 +4,17 @@ import {
     Column, BeforeInsert,
     BeforeUpdate,
     CreateDateColumn,
-    UpdateDateColumn
+    UpdateDateColumn,
+    OneToMany,
+    JoinColumn
 } from 'typeorm'
 
 import bcrypt from 'bcryptjs'
 
 
-export interface TypeUser {
-    id: string,
-    username: string,
-    email: string,
-    avathar_url: string
-    password?: string,
-    token?: string,
-    created_at: Date,
-    updated_at: Date
-}
 
+import { v4 as uuid } from 'uuid'
+import Post from './Post'
 @Entity('users')
 class User {
 
@@ -46,12 +40,21 @@ class User {
     @UpdateDateColumn()
     updated_at: Date
 
+    @OneToMany(() => Post, post => post.user_id)
+    posts: Post[]
+
+
     @BeforeInsert()
     @BeforeUpdate()
     hashPassword() {
         this.password = bcrypt.hashSync(this.password)
     }
 
+    constructor() {
+        if (!this.id) {
+            this.id = uuid()
+        }
+    }
 }
 
 export default User
