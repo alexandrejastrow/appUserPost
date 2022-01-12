@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { GetUserPostService } from '../../service/usersServices/GetUserPostService';
+import { GetUserPostService } from '../../service/postServices/GetPostService';
 
 class GetUserPostsController {
     async handle(req: Request, res: Response) {
