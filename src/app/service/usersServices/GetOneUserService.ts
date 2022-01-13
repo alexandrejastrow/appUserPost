@@ -11,7 +11,7 @@ export class GetOneUserService {
 
         if (!user) {
 
-            return new Error('nao existe')
+            return new Error("User already existis")
         }
 
         return user

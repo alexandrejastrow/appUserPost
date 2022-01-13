@@ -1,19 +1,10 @@
-import { GetAllUsersService } from '../../service/usersServices/GetAllUsersService'
 import { GetOneUserService } from '../../service/usersServices/GetOneUserService'
 import { GetManyUsersService } from '../../service/usersServices/GetManyUsersService'
 
 import { Request, Response, NextFunction } from 'express'
+import { UserRequest } from '../../models/User'
 class FindUsersController {
 
-    async all(req: Request, res: Response) {
-
-        const service = new GetAllUsersService()
-
-        const users = await service.execute()
-
-        return res.status(200).json(users)
-
-    }
 
     async byId(req: Request, res: Response, next: NextFunction) {
 
@@ -23,7 +14,8 @@ class FindUsersController {
         try {
 
             const user = await service.execute(id)
-            req.body = user
+            req.body.user = user
+
             next()
         } catch (error) {
             return res.status(400).end()
@@ -34,13 +26,23 @@ class FindUsersController {
 
     async byRange(req: Request, res: Response) {
 
-        const { range } = req.params
+        const { skip } = req.params
+
         const service = new GetManyUsersService()
 
+        if (service instanceof Error) {
+            return res.status(400).end()
+        }
         try {
 
-            const users = await service.execute(range)
-            return res.status(200).json(users)
+            const users = await service.execute(skip)
+
+            const data = users as Array<UserRequest>
+
+            data.map(data => delete data.password)
+
+            return res.status(200).json(data)
+
         } catch (error) {
             return res.status(400).end()
         }

@@ -1,19 +1,23 @@
 import { Request, Response } from 'express'
-import { GetUserPostService } from '../../service/postServices/GetPostService';
+import User, { UserRequest } from '../../models/User';
+import { GetPostService } from '../../service/postServices/GetPostService';
 
 class GetUserPostsController {
     async handle(req: Request, res: Response) {
 
-        const { username, id, email, avathar_url } = req.body
+        const { user } = req.body
 
-        const posts = new GetUserPostService()
-        const resultPost = await posts.execute(id)
+        const posts = new GetPostService()
+        const resultPost = await posts.execute(user.id)
 
         if (resultPost instanceof Error) {
             return res.status(400).json(resultPost.message)
         }
 
-        return res.status(200).json({ username, id, email, avathar_url, posts: resultPost })
+        const data = user as UserRequest
+        delete data.password
+
+        return res.status(200).json({ ...data, posts: resultPost })
     }
 }
 

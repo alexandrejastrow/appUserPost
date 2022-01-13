@@ -21,7 +21,7 @@ export class UpdateUserServirce {
 
         if (!user) {
 
-            return new Error('nao existe')
+            return new Error("User already existis")
         }
 
         user.username = username ? username : user.username

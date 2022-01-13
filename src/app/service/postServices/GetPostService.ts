@@ -1,13 +1,13 @@
 import { getRepository } from 'typeorm'
 import Post from '../../models/Post'
 
-export class GetUserPostService {
+export class GetPostService {
 
     async execute(id: string) {
 
         const repo = getRepository(Post)
 
-        const posts = repo.find({ user_id: id })
+        const posts = await repo.find({ user_id: id })
 
         return posts
     }

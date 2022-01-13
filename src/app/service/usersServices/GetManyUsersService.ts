@@ -3,10 +3,10 @@ import User from '../../models/User'
 
 export class GetManyUsersService {
 
-    async execute(range: string) {
+    async execute(skips: string) {
 
         const repo = getRepository(User)
-        const skip = parseInt(range)
+        const skip = parseInt(skips)
 
         const users = await repo.find({
             take: 10,
@@ -15,7 +15,7 @@ export class GetManyUsersService {
 
         if (!users) {
 
-            return new Error('nao existe')
+            return new Error("User already existis")
         }
 
         return users

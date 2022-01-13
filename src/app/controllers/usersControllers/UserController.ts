@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { UserRequest } from '../../models/User';
 
 import CreateUserService from '../../service/usersServices/CreateUserCategory';
 class UserControler {
@@ -14,7 +15,11 @@ class UserControler {
             return res.status(400).json(result.message)
         }
 
-        return res.status(201).json(result)
+        const data = result as UserRequest
+
+        delete data.password
+
+        return res.status(201).json(data)
     }
 }
 

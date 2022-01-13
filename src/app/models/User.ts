@@ -5,13 +5,21 @@ import {
     BeforeUpdate,
     CreateDateColumn,
     UpdateDateColumn,
-    OneToMany,
-    JoinColumn
+    OneToMany
 } from 'typeorm'
 
 import bcrypt from 'bcryptjs'
 
 
+export interface UserRequest {
+    id: string
+    username?: string,
+    email?: string,
+    avathar_url?: string
+    password?: string,
+    created_at?: Date
+    updated_at?: Date
+}
 
 import { v4 as uuid } from 'uuid'
 import Post from './Post'
