@@ -5,6 +5,7 @@ import FindUsersController from '../app/controllers/usersControllers/FindUsersCo
 import DeleteUserControle from "../app/controllers/usersControllers/DeleteUserControle";
 import UpdateUserController from "../app/controllers/usersControllers/UpdateUserController";
 import GetUserPostsController from "../app/controllers/usersControllers/GetUserPostsController";
+import AuthMiddleware from "../app/middlewares/AuthMiddleware";
 
 const userRoutes = Router()
 
