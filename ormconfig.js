@@ -1,6 +1,13 @@
 module.exports = {
     "type": "postgres",
     "url": process.env.DATABASE_URL,
+    "ssl": true,
+    "synchronize": true,
+    "extra": {
+        "ssl": {
+            "rejectUnauthorized": false
+        }
+    },
 
     "entities": [
         "src/app/models/*.ts",
@@ -13,13 +20,3 @@ module.exports = {
         "migrationsDir": "src/database/migrations"
     }
 }
-
-/*
-    "ssl": true,
-    "synchronize": true,
-    "extra": {
-        "ssl": {
-            "rejectUnauthorized": false
-        }
-    },
-*/
