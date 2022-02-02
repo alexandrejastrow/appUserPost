@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import User, { UserRequest } from '../../models/User';
+import { UserRequest } from '../../models/User';
 import { GetPostService } from '../../service/postServices/GetPostService';
 
 class GetUserPostsController {

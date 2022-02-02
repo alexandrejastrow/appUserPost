@@ -5,6 +5,8 @@ import bcrypt from 'bcryptjs'
 import User, { UserRequest } from '../../models/User'
 import jwt from 'jsonwebtoken'
 
+import { setRedis } from '../../../database/redisConfig'
+
 
 class AuthController {
     async authenticate(req: Request, res: Response) {
@@ -34,6 +36,8 @@ class AuthController {
 
 
             delete data.password
+
+            await setRedis(`user-${data.id}`, JSON.stringify(data))
 
             return res.status(200).json({ ...data, token })
         } catch (error) {

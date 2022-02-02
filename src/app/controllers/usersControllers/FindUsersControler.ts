@@ -3,6 +3,7 @@ import { GetManyUsersService } from '../../service/usersServices/GetManyUsersSer
 
 import { Request, Response, NextFunction } from 'express'
 import { UserRequest } from '../../models/User'
+import { getRedis } from '../../../database/redisConfig'
 class FindUsersController {
 
 
@@ -10,6 +11,15 @@ class FindUsersController {
 
         const { id } = req.params
         const service = new GetOneUserService()
+
+        const userRedis = await getRedis(`user-${id}`)
+
+        const cachUser = JSON.parse(userRedis as string)
+
+        if (cachUser) {
+            req.body.user = cachUser
+            next()
+        }
 
         try {
 
@@ -33,6 +43,8 @@ class FindUsersController {
         if (service instanceof Error) {
             return res.status(400).end()
         }
+
+
         try {
 
             const users = await service.execute(skip)
